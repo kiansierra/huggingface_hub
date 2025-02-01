@@ -463,6 +463,8 @@ class InferenceClient:
         audio: ContentT,
         *,
         model: Optional[str] = None,
+        headers: Optional[dict] = None,
+        parameters: Optional[dict] = None
     ) -> AutomaticSpeechRecognitionOutput:
         """
         Perform automatic speech recognition (ASR or audio-to-text) on the given audio content.
@@ -493,8 +495,8 @@ class InferenceClient:
         provider_helper = get_provider_helper(self.provider, task="automatic-speech-recognition")
         request_parameters = provider_helper.prepare_request(
             inputs=audio,
-            parameters={},
-            headers=self.headers,
+            parameters=parameters or {},
+            headers=headers or self.headers,
             model=model or self.model,
             api_key=self.token,
         )
